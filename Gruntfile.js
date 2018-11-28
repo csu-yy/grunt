@@ -31,6 +31,16 @@ module.exports = function (grunt) {
       }*/
     },
 
+    // 配置watch将监控哪些文件的变化，以及文件一旦变化，要立即执行哪些插件功能
+    // 如下 watch将监控src文件夹下所有js文件的变化，一旦变化，则立即执行uglify这个插件的功能
+    watch: {
+      target: {
+        files: ['src/js/utility/*.js'],
+        tasks: ['uglify'],
+        options: {spawn:false}
+      }
+    },
+
   });
   // defaut tasks
   // grunt.registerTask('default',[]);
@@ -38,8 +48,10 @@ module.exports = function (grunt) {
   // step2 在grunt.initConfig 方法之后，要让grunt去加载这个插件
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
+  grunt.loadNpmTasks('grunt-contrib-watch');
+
   // step3 在grunt命令执行时，要不要立即执行uglify插件？若要，就写上，否则不写
-  grunt.registerTask('default',['uglify']);
+  grunt.registerTask('default',['uglify', 'watch']);
 
 }
 
