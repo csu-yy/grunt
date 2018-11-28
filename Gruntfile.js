@@ -36,8 +36,48 @@ module.exports = function (grunt) {
     watch: {
       target: {
         files: ['src/js/utility/*.js'],
-        tasks: ['uglify'],
+        tasks: ['jshint','uglify'],
         options: {spawn:false}
+      }
+    },
+
+    // jshint插件的配置信息
+    // jshint: {
+    //   build: ['Gruntfile.js', 'src/**/*.js'],
+    //   options: {
+    //     jshint: '.jshintrc'
+    //   }
+    // },
+
+    // jshint: {
+    //   all: ['src/**/*.js'],
+    //   options: {
+    //     browser: true,  // browser environment
+    //     devel: true     // 
+    //   }
+    // },
+
+    // jshint插件的配置信息
+    jshint: {
+      options: {
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        browser: true,
+        devel: true,
+        globals: {
+          jQuery: true
+        },
+      },
+      // uses_defaults: ['dir1/**/*.js', 'dir2/**/*.js'],
+      with_overrides: {
+        options: {
+          curly: false,
+          undef: true,
+        },
+        files: {
+          src: ['src/js/utility/*.js']
+        },
       }
     },
 
@@ -47,13 +87,13 @@ module.exports = function (grunt) {
 
   // step2 在grunt.initConfig 方法之后，要让grunt去加载这个插件
   grunt.loadNpmTasks('grunt-contrib-uglify');
-
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // step3 在grunt命令执行时，要不要立即执行uglify插件？若要，就写上，否则不写
-  grunt.registerTask('default',['uglify', 'watch']);
+  grunt.registerTask('default',['jshint', 'uglify', 'watch']);
 
-}
+};
 
 
 
